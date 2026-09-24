@@ -43,7 +43,10 @@ public class AuthController {
         return userRepository.findByUsername(loginRequest.getUsername())
                 .flatMap(user -> {
                     if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-                        Map<String, Object> extraClaims = Map.of("userId", user.getId());
+                        Map<String, Object> extraClaims = Map.of(
+                                "userId", user.getId(),
+                                "username", user.getUsername()
+                        );
                         String token = jwtService.generateToken(user.getUsername(), extraClaims);
                         return Mono.just(ResponseEntity.ok(Map.of("token", token)));
                     } else {
