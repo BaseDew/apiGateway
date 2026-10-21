@@ -98,6 +98,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>api-gateway-jib-native:latest</name>
+						<builder>paketobuildpacks/builder-jammy-tiny:latest</builder>
+						<env>
+							<BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+							<BP_NATIVE_IMAGE_BUILD_ARGUMENTS>--initialize-at-build-time=org.jboss.logging --initialize-at-run-time=io.r2dbc,org.postgresql.r2dbc</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+						</env>
+					</image>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
